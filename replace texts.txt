@@ -1,0 +1,33 @@
+Replace contents
+only div
+<div class="cat-container">
+  <div class="cat"
+       onclick="openCard(event, 'You make my days softer just by existing 🐾')">
+    <img src="https://placekitten.com/300/300">
+  </div>
+
+  <div class="cat"
+       onclick="openCard(event, 'I smile every time I see your name pop up 😽')">
+    <img src="https://placekitten.com/301/300">
+  </div>
+
+  <div class="cat"
+       onclick="openCard(event, 'I think I like you more than I admit 😼💘')">
+    <img src="https://placekitten.com/300/301">
+  </div>
+
+  <div class="cat"
+       onclick="openCard(event, 'This one’s my favourite… don’t tell the others 🤍')">
+    <img src="https://placekitten.com/302/300">
+  </div>
+</div>
+
+
+replace function 
+  function openCard(event, catMessage) {
+  document.getElementById("cardText").innerText =
+    `${yourMessage}\n\n${catMessage}\n\n${hisName}… I’ve been kitten around 🐱💘 will you be mine?`;
+
+  document.getElementById("overlay").style.display = "flex";
+  createBurst(event.clientX, event.clientY);
+}
