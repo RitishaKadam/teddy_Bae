@@ -241,16 +241,21 @@
 
   function openCard(event) {
     document.getElementById("cardText").innerText =
-      `${name}… I’ve been kitten around 🐱💘 will you be mine?`;
+      `${yourMessage}\n\n${hisName}… I’ve been kitten around 🐱💘 will you be mine?`;
     document.getElementById("overlay").style.display = "flex";
     createBurst(event.clientX, event.clientY);
   }
 
-  function yesClicked() {
+ function yesClicked() {
     document.getElementById("overlay").style.display = "none";
     document.getElementById("finalScreen").style.display = "flex";
+
     document.getElementById("finalText").innerText =
-      `CONGRATS ${name} 😭💖\nYou’re officially mine now 🐾💍`;
+      `${finalMessage}`;
+
+    document.getElementById("signature").innerText =
+      `— ${yourName} 💖`;
+
     bigBurst();
   }
 
@@ -299,4 +304,5 @@
 
 </body>
 </html>
+
 
