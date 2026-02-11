@@ -149,6 +149,28 @@
   .final h1 {
     font-size: 2.2em;
   }
+
+  /* RING ANIMATION */
+.ring {
+  font-size: 60px;
+  animation: ringPop 1.2s ease forwards;
+  margin-bottom: 10px;
+}
+
+@keyframes ringPop {
+  0% {
+    transform: scale(0) rotate(-30deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
 </style>
 </head>
 
@@ -186,21 +208,25 @@
 
 <!-- FINAL SCREEN -->
 <div class="overlay final" id="finalScreen">
+  <div class="ring">💍</div>
   <h1 id="finalText"></h1>
-  <p>💍💖🐱</p>
+  <p id="signature"></p>
 </div>
 
 <script>
-  let name = "";
+ /* 💖 PERSONALIZATION 💖 */
+  const hisName = "Abhishek";   
+  const yourName = "Ritisha"; 
+  const yourMessage = "I know this is a little cheesy, but it’s also very real.";
+  const finalMessage =
+    "I don’t know where this goes, but I know I want to find out with you.";
+
   let noCount = 0;
+// SET TITLE
+  document.getElementById("title").innerText =
+    `🐾 ${hisName}, Will You Be My Valentine? 💕`;
 
-  window.onload = () => {
-    name = prompt("Hey 👀 What's your name?");
-    if (!name) name = "Cutie";
-    document.getElementById("title").innerText =
-      `🐾 ${name}, Will You Be My Valentine? 💕`;
-  };
-
+  
   // FLOATING HEARTS
   setInterval(() => {
     const heart = document.createElement("div");
@@ -273,3 +299,4 @@
 
 </body>
 </html>
+
