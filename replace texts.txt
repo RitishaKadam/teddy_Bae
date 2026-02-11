@@ -31,3 +31,106 @@ replace function
   document.getElementById("overlay").style.display = "flex";
   createBurst(event.clientX, event.clientY);
 }
+
+
+replace ring
+/* FINAL HEART + CAT ANIMATION */
+.final-pop {
+  font-size: 60px;
+  animation: popIn 1.2s ease forwards;
+  margin-bottom: 10px;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+
+html final
+<!-- FINAL SCREEN -->
+<div class="overlay final" id="finalScreen">
+  <div class="final-pop">💖🐱</div>
+  <h1 id="finalText"></h1>
+  <p id="signature"></p>
+</div>
+
+For example:
+
+💘🐾
+
+😻💞
+
+🐱💗
+
+🐾❤️
+
+
+
+final screen floating hearts
+/* FINAL SCREEN FLOATING HEARTS */
+.final-heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 24px;
+  opacity: 0.9;
+  animation: finalFloat 5s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes finalFloat {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-110vh) scale(1.6);
+    opacity: 0;
+  }
+}
+
+
+function startFinalHearts() {
+  const emojis = ["💖", "💗", "💘", "😻", "🐱", "🐾"];
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "final-heart";
+
+    // pick random emoji
+    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    heart.style.animationDuration = Math.random() * 2 + 4 + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+  }, 400);
+}
+
+
+replace function
+function yesClicked() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("finalScreen").style.display = "flex";
+
+  document.getElementById("finalText").innerText = finalMessage;
+  document.getElementById("signature").innerText = `— ${yourName} 💖`;
+
+  bigBurst();
+  startFinalHearts(); // 💕 ADD THIS LINE
+}
+
+if you want different emoji
+heart.textContent = "💖";
