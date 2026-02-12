@@ -30,22 +30,33 @@
   }
 
   .cat {
-    background: white;
-    border-radius: 15px;
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.2s;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
+  background: white;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+
+  height: 220px;              /* Fixed box height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;           /* Hide overflow */
+}
+
+.cat img {
+  width: 100%;
+  height: 100%;               /* Fill container */
+  object-fit: cover;          /* Crop nicely */
+  border-radius: 12px;
+}
+
 
   .cat:hover {
     transform: scale(1.08);
   }
 
-  .cat img {
-    width: 100%;
-    border-radius: 12px;
-  }
+
 
   /* FLOATING HEARTS (background) */
   .heart {
@@ -369,5 +380,6 @@ function startFinalHearts() {
 
 </body>
 </html>
+
 
 
