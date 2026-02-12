@@ -150,16 +150,16 @@
     font-size: 2.2em;
   }
 
-  /* RING ANIMATION */
-.ring {
+  /* FINAL HEART + CAT ANIMATION */
+.final-pop {
   font-size: 60px;
-  animation: ringPop 1.2s ease forwards;
+  animation: popIn 1.2s ease forwards;
   margin-bottom: 10px;
 }
 
-@keyframes ringPop {
+@keyframes popIn {
   0% {
-    transform: scale(0) rotate(-30deg);
+    transform: scale(0) rotate(-20deg);
     opacity: 0;
   }
   60% {
@@ -180,16 +180,27 @@
 <p>Click the cats 😽</p>
 
 <div class="cat-container">
-  <div class="cat" onclick="openCard(event)">
+  <div class="cat"
+       onclick="openCard(event, 'You make my days softer just by existing 🐾')">
     <img src="images/img1.jpg">
   </div>
-  <div class="cat" onclick="openCard(event)">
+
+  <div class="cat"
+       onclick="openCard(event, 'I smile every time I see your name pop up 😽')">
     <img src="images/img2.jpg">
   </div>
-  <div class="cat" onclick="openCard(event)">
+
+  <div class="cat"
+       onclick="openCard(event, 'I think I like you more than I admit 😼💘')">
     <img src="images/img3.jpg">
   </div>
+
+  <div class="cat"
+       onclick="openCard(event, 'This one’s my favourite… don’t tell the others 🤍')">
+    <img src="images/img4.jpg">
+  </div>
 </div>
+
 
 <!-- QUESTION CARD -->
 <div class="overlay" id="overlay">
@@ -208,7 +219,7 @@
 
 <!-- FINAL SCREEN -->
 <div class="overlay final" id="finalScreen">
-  <div class="ring">💍</div>
+  <div class="final-pop">💖🐱</div>
   <h1 id="finalText"></h1>
   <p id="signature"></p>
 </div>
@@ -239,25 +250,24 @@
     setTimeout(() => heart.remove(), 7000);
   }, 600);
 
-  function openCard(event) {
-    document.getElementById("cardText").innerText =
-      `${yourMessage}\n\n${hisName}… I’ve been smitten like a kitten 🐱💘 will you be mine?`;
-    document.getElementById("overlay").style.display = "flex";
-    createBurst(event.clientX, event.clientY);
-  }
+  function openCard(event, catMessage) {
+  document.getElementById("cardText").innerText =
+    `${yourMessage}\n\n${catMessage}\n\n${hisName}… I’ve been smitten like a kitten 🐱💘 will you be mine?`;
 
- function yesClicked() {
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("finalScreen").style.display = "flex";
+  document.getElementById("overlay").style.display = "flex";
+  createBurst(event.clientX, event.clientY);
+}
 
-    document.getElementById("finalText").innerText =
-      `${finalMessage}`;
+function yesClicked() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("finalScreen").style.display = "flex";
 
-    document.getElementById("signature").innerText =
-      `— ${yourName} 💖`;
+  document.getElementById("finalText").innerText = finalMessage;
+  document.getElementById("signature").innerText = `— ${yourName} 💖`;
 
-    bigBurst();
-  }
+  bigBurst();
+  startFinalHearts(); // 💕 ADD THIS LINE
+}
 
   function noPanic() {
     const btn = document.getElementById("noBtn");
@@ -300,10 +310,55 @@
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 1000);
   }
+
+
+  /* FINAL SCREEN FLOATING HEARTS */
+.final-heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 24px;
+  opacity: 0.9;
+  animation: finalFloat 5s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes finalFloat {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-110vh) scale(1.6);
+    opacity: 0;
+  }
+}
+
+
+function startFinalHearts() {
+  const emojis = ["💖", "💗", "💘", "😻", "🐱", "🐾"];
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "final-heart";
+
+    // pick random emoji
+    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    heart.style.animationDuration = Math.random() * 2 + 4 + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+  }, 400);
+}
+
 </script>
 
 </body>
 </html>
+
 
 
 
