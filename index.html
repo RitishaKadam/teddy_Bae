@@ -19,7 +19,6 @@
     z-index: 2;
   }
 
-  /* CAT GRID */
   .cat-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -48,7 +47,7 @@
     border-radius: 12px;
   }
 
-  /* FLOATING HEARTS */
+  /* FLOATING HEARTS (background) */
   .heart {
     position: absolute;
     bottom: -20px;
@@ -150,57 +149,64 @@
     font-size: 2.2em;
   }
 
-  /* FINAL HEART + CAT ANIMATION */
-.final-pop {
-  font-size: 60px;
-  animation: popIn 1.2s ease forwards;
-  margin-bottom: 10px;
-}
+  .final-pop {
+    font-size: 60px;
+    animation: popIn 1.2s ease forwards;
+    margin-bottom: 10px;
+  }
 
-@keyframes popIn {
-  0% {
-    transform: scale(0) rotate(-20deg);
-    opacity: 0;
+  @keyframes popIn {
+    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+    60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); }
   }
-  60% {
-    transform: scale(1.2) rotate(10deg);
-    opacity: 1;
+
+  /* FINAL FLOATING HEARTS */
+  .final-heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 24px;
+    opacity: 0.9;
+    animation: finalFloat linear forwards;
+    pointer-events: none;
   }
-  100% {
-    transform: scale(1) rotate(0);
+
+  @keyframes finalFloat {
+    from {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-110vh) scale(1.6);
+      opacity: 0;
+    }
   }
-}
 
 </style>
 </head>
 
 <body>
 
-<h1 id="title">🐾 Will You Be My Valentine? 💕</h1>
+<h1 id="title"></h1>
 <p>Click the cats 😽</p>
 
 <div class="cat-container">
-  <div class="cat"
-       onclick="openCard(event, 'You make my days softer just by existing 🐾')">
+  <div class="cat" onclick="openCard(event, 'You make my days softer just by existing 🐾')">
     <img src="images/img1.jpg">
   </div>
 
-  <div class="cat"
-       onclick="openCard(event, 'I smile every time I see your name pop up 😽')">
+  <div class="cat" onclick="openCard(event, 'I smile every time I see your name pop up 😽')">
     <img src="images/img2.jpg">
   </div>
 
-  <div class="cat"
-       onclick="openCard(event, 'I think I like you more than I admit 😼💘')">
+  <div class="cat" onclick="openCard(event, 'I think I like you more than I admit 😼💘')">
     <img src="images/img3.jpg">
   </div>
 
-  <div class="cat"
-       onclick="openCard(event, 'This one’s my favourite… don’t tell the others 🤍')">
+  <div class="cat" onclick="openCard(event, 'This one’s my favourite… don’t tell the others 🤍')">
     <img src="images/img4.jpg">
   </div>
 </div>
-
 
 <!-- QUESTION CARD -->
 <div class="overlay" id="overlay">
@@ -213,7 +219,9 @@
       <button class="btn no" id="noBtn" onmouseover="noPanic()">No 😼</button>
     </div>
 
-    <p id="guiltText" style="display:none;margin-top:10px;">wow… okay… i’ll just cry here 😭</p>
+    <p id="guiltText" style="display:none;margin-top:10px;">
+      wow… okay… i’ll just cry here 😭
+    </p>
   </div>
 </div>
 
@@ -225,32 +233,32 @@
 </div>
 
 <script>
- /* 💖 PERSONALIZATION 💖 */
-  const hisName = "Abhishek";   
-  const yourName = "Ritisha"; 
-  const yourMessage = "I know this is a little cheesy, but it’s also very real.";
-  const finalMessage =
-    "I don’t know where this goes, but I know I want to find out with you.";
 
-  let noCount = 0;
-// SET TITLE
-  document.getElementById("title").innerText =
-    `🐾 ${hisName}, Will You Be My Valentine? 💕`;
+const hisName = "Abhishek";   
+const yourName = "Ritisha"; 
+const yourMessage = "I know this is a little cheesy, but it’s also very real.";
+const finalMessage =
+  "I don’t know where this goes, but I know I want to find out with you.";
 
-  
-  // FLOATING HEARTS
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.textContent = "💖";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    heart.style.animationDuration = Math.random() * 3 + 4 + "s";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
-  }, 600);
+let noCount = 0;
+let finalInterval = null;
 
-  function openCard(event, catMessage) {
+document.getElementById("title").innerText =
+  `🐾 ${hisName}, Will You Be My Valentine? 💕`;
+
+/* Background Floating Hearts */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}, 600);
+
+function openCard(event, catMessage) {
   document.getElementById("cardText").innerText =
     `${yourMessage}\n\n${catMessage}\n\n${hisName}… I’ve been smitten like a kitten 🐱💘 will you be mine?`;
 
@@ -266,90 +274,64 @@ function yesClicked() {
   document.getElementById("signature").innerText = `— ${yourName} 💖`;
 
   bigBurst();
-  startFinalHearts(); // 💕 ADD THIS LINE
+  startFinalHearts();
 }
 
-  function noPanic() {
-    const btn = document.getElementById("noBtn");
-    const guilt = document.getElementById("guiltText");
-    noCount++;
+function noPanic() {
+  const btn = document.getElementById("noBtn");
+  const guilt = document.getElementById("guiltText");
+  noCount++;
 
-    btn.innerText = "WHY 😭";
-    btn.style.animation = "shake 0.4s";
+  btn.innerText = "WHY 😭";
+  btn.style.animation = "shake 0.4s";
 
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 150 - 75;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 150 - 75;
+  btn.style.transform = `translate(${x}px, ${y}px)`;
 
-    if (noCount >= 4) {
-      btn.style.display = "none";
-      guilt.style.display = "block";
-    }
-
-    setTimeout(() => btn.style.animation = "", 400);
+  if (noCount >= 4) {
+    btn.style.display = "none";
+    guilt.style.display = "block";
   }
 
-  function createBurst(x, y) {
-    for (let i = 0; i < 12; i++) spawnHeart(x, y);
-  }
-
-  function bigBurst() {
-    const cx = window.innerWidth / 2;
-    const cy = window.innerHeight / 2;
-    for (let i = 0; i < 40; i++) spawnHeart(cx, cy);
-  }
-
-  function spawnHeart(x, y) {
-    const heart = document.createElement("div");
-    heart.className = "burst-heart";
-    heart.textContent = "💗";
-    heart.style.left = x + "px";
-    heart.style.top = y + "px";
-    heart.style.setProperty("--x", (Math.random() * 300 - 150) + "px");
-    heart.style.setProperty("--y", (Math.random() * -300) + "px");
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1000);
-  }
-
-
-  /* FINAL SCREEN FLOATING HEARTS */
-.final-heart {
-  position: absolute;
-  bottom: -20px;
-  font-size: 24px;
-  opacity: 0.9;
-  animation: finalFloat 5s linear forwards;
-  pointer-events: none;
+  setTimeout(() => btn.style.animation = "", 400);
 }
 
-@keyframes finalFloat {
-  from {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-110vh) scale(1.6);
-    opacity: 0;
-  }
+function createBurst(x, y) {
+  for (let i = 0; i < 12; i++) spawnHeart(x, y);
 }
 
+function bigBurst() {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  for (let i = 0; i < 40; i++) spawnHeart(cx, cy);
+}
+
+function spawnHeart(x, y) {
+  const heart = document.createElement("div");
+  heart.className = "burst-heart";
+  heart.textContent = "💗";
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
+  heart.style.setProperty("--x", (Math.random() * 300 - 150) + "px");
+  heart.style.setProperty("--y", (Math.random() * -300) + "px");
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 1000);
+}
 
 function startFinalHearts() {
+  if (finalInterval) return;
+
   const emojis = ["💖", "💗", "💘", "😻", "🐱", "🐾"];
 
-  setInterval(() => {
+  finalInterval = setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "final-heart";
-
-    // pick random emoji
     heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.fontSize = Math.random() * 20 + 20 + "px";
     heart.style.animationDuration = Math.random() * 2 + 4 + "s";
-
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 6000);
   }, 400);
 }
@@ -358,7 +340,3 @@ function startFinalHearts() {
 
 </body>
 </html>
-
-
-
-
