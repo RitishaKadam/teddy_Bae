@@ -138,12 +138,15 @@
   }
 
   /* FINAL SCREEN */
-  .final {
-    background: #ffe6f0;
-    color: #ff4d88;
-    flex-direction: column;
-    text-align: center;
-  }
+ .final {
+  background: #ffe6f0;
+  color: #ff4d88;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
 
   .final h1 {
     font-size: 2.2em;
@@ -163,13 +166,13 @@
 
   /* FINAL FLOATING HEARTS */
   .final-heart {
-    position: absolute;
-    bottom: -20px;
-    font-size: 24px;
-    opacity: 0.9;
-    animation: finalFloat linear forwards;
-    pointer-events: none;
-  }
+  position: absolute;
+  bottom: -20px;
+  opacity: 0.9;
+  animation: finalFloat linear forwards;
+  pointer-events: none;
+}
+
 
   @keyframes finalFloat {
     from {
@@ -272,7 +275,7 @@ function yesClicked() {
 
   document.getElementById("finalText").innerText = finalMessage;
   document.getElementById("signature").innerText = `— ${yourName} 💖`;
-
+  console.log("YES CLICKED");
   bigBurst();
   startFinalHearts();
 }
@@ -322,21 +325,31 @@ function spawnHeart(x, y) {
 function startFinalHearts() {
   if (finalInterval) return;
 
+  const finalScreen = document.getElementById("finalScreen");
   const emojis = ["💖", "💗", "💘", "😻", "🐱", "🐾"];
 
   finalInterval = setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "final-heart";
+
     heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-    heart.style.left = Math.random() * 100 + "vw";
+
+    // IMPORTANT CHANGE 👇
+    heart.style.left = Math.random() * finalScreen.offsetWidth + "px";
+
     heart.style.fontSize = Math.random() * 20 + 20 + "px";
     heart.style.animationDuration = Math.random() * 2 + 4 + "s";
-    document.body.appendChild(heart);
+
+    finalScreen.appendChild(heart);
+
     setTimeout(() => heart.remove(), 6000);
   }, 400);
 }
+
+
 
 </script>
 
 </body>
 </html>
+
