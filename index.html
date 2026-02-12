@@ -141,11 +141,16 @@
  .final {
   background: #ffe6f0;
   color: #ff4d88;
+  position: fixed;      /* ensure full screen */
+  inset: 0;
+  display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  position: relative;
-  overflow: hidden;
+  overflow: hidden;     /* keeps hearts inside */
 }
+
 
 
   .final h1 {
@@ -165,12 +170,19 @@
   }
 
   /* FINAL FLOATING HEARTS */
-  .final-heart {
+ .final-heart {
   position: absolute;
-  bottom: -20px;
-  opacity: 0.9;
+  bottom: 0;
   animation: finalFloat linear forwards;
   pointer-events: none;
+  z-index: 1; /* IMPORTANT */
+}
+
+.final-pop,
+#finalText,
+#signature {
+  position: relative;
+  z-index: 2;
 }
 
 
@@ -332,24 +344,30 @@ function startFinalHearts() {
     const heart = document.createElement("div");
     heart.className = "final-heart";
 
-    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    heart.textContent =
+      emojis[Math.floor(Math.random() * emojis.length)];
 
-    // IMPORTANT CHANGE 👇
-    heart.style.left = Math.random() * finalScreen.offsetWidth + "px";
+    // Use % instead of vw (mobile safe)
+    heart.style.left = Math.random() * 100 + "%";
 
-    heart.style.fontSize = Math.random() * 20 + 20 + "px";
-    heart.style.animationDuration = Math.random() * 2 + 4 + "s";
+    heart.style.fontSize =
+      Math.random() * 20 + 20 + "px";
+
+    heart.style.animationDuration =
+      Math.random() * 2 + 4 + "s";
 
     finalScreen.appendChild(heart);
 
-    setTimeout(() => heart.remove(), 6000);
+    setTimeout(() => {
+      heart.remove();
+    }, 6000);
+
   }, 400);
 }
-
-
 
 </script>
 
 </body>
 </html>
+
 
